@@ -2,12 +2,46 @@ import { GraphQLServer } from 'graphql-yoga'
 
 // Scalar types of GraphQL: String, Boolean, , Int, Float, ID
 
+// Demo user data
+const users = [{
+    id: 1,
+    name: 'Petros',
+    email: 'pit.trak@gmail.com',
+    age: 34
+},{
+    id: 2,
+    name: 'Eleni',
+    email: 'eleni@gmail.com'
+}, {
+    id: 3,
+    name: 'Maggie',
+    email: 'maggie@gmail.com',
+    age: 36
+}]
+
+// Demo posts data
+const posts = [{
+    id: 1,
+    title: 'Post#1',
+    body: 'Body of first post',
+    isPublished: true
+},{
+    id: 2,
+    title: 'Post#2',
+    body: 'Body of second post',
+    isPublished: false
+},{
+    id: 3,
+    title: 'Post#3',
+    body: 'Body of third post',
+    isPublished: false
+}]
+
 // Type definitions (schema)
 const typeDefs = `
     type Query {
-        add(numbers: [Float!]!): Float!
-        greeting(name: String, position: String): String!
-        grades: [Int!]!
+        users(query: String): [User!]!
+        posts(query: String): [Post!]!
         me: User!
         post: Post!
     }
@@ -30,26 +64,26 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
     Query: {
-        add(parent, args, ctx, info) {
-            if(args.numbers.length === 0) {
-                return 0
+        users(parent, args, ctx, info) {
+            if(!args.query) {
+                return users
             }
 
-            // [1, 5, 10, 7]
-            // reduce() executes a reducer function (that you provide) on each element of the array, resulting in single output value
-            return args.numbers.reduce((accumulator, currentValue) => {
-                return accumulator + currentValue
+            // includes() method determines whether an array includes a certain value among its entries, returning true or false as appropriate
+            return users.filter((user) => {
+                return user.name.toLowerCase().includes(args.query.toLowerCase())
             })
         },
-        greeting(parent, args, ctx, info) {
-            if(args.name && args.position) {
-                return `Hello ${args.name}, I'm an ${args.position}!`
-            } else {
-                return 'Hello!'
+        posts(parent, args, ctx, info) {
+            if(!args.query) {
+                return posts
             }
-        },
-        grades(parent, args, ctx, info) {
-            return [90, 83, 92]
+
+            return posts.filter((post) => {
+                const isTitleMatch = post.title.toLowerCase().includes(args.query.toLowerCase())
+                const isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase())
+                return isTitleMatch || isBodyMatch
+            })
         },
         me() {
             return {
