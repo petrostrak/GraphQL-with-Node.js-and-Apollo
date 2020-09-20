@@ -7,16 +7,19 @@ const users = [{
     id: 1,
     name: 'Petros',
     email: 'pit.trak@gmail.com',
-    age: 34
+    age: 34,
+    comments: 4
 },{
     id: 2,
     name: 'Eleni',
-    email: 'eleni@gmail.com'
+    email: 'eleni@gmail.com',
+    comments: 5
 }, {
     id: 3,
     name: 'Maggie',
     email: 'maggie@gmail.com',
-    age: 36
+    age: 36,
+    comments: 7
 }]
 
 // Demo posts data
@@ -43,16 +46,20 @@ const posts = [{
 // Demo comments data
 const comments = [{
     id: 4,
-    text: 'The text for the first comment'
+    text: 'The text for the first comment',
+    author: 1
 },{
     id: 5,
-    text: 'Second comment'
+    text: 'Second comment',
+    author: 2
 },{
     id: 6,
-    text: 'Third comment'
+    text: 'Third comment',
+    author: 2
 },{
     id: 7,
-    text: 'Fourth comment and we are done!'
+    text: 'Fourth comment and we are done!',
+    author: 3
 }]
 
 // Type definitions (schema)
@@ -71,6 +78,7 @@ const typeDefs = `
         email: String!
         age: Int
         posts: [Post!]!
+        comments: [Comment!]!
     }
 
     type Post {
@@ -84,6 +92,7 @@ const typeDefs = `
     type Comment {
         id: ID!
         text: String!
+        author: User!
     }
 `
 
@@ -112,9 +121,7 @@ const resolvers = {
             })
         },
         comments(parent, args, ctx, info) {
-            if(!args.query) {
-                return comments
-            }
+            return comments
         },
         me() {
             return {
@@ -145,6 +152,18 @@ const resolvers = {
         posts(parent, args, ctx, info) {
             return posts.filter((post) => {
                 return post.author === parent.id
+            })
+        },
+        comments(parent, args, ctx, info) {
+            return comments.filter((comment) => {
+                return comment.author === parent.id
+            })
+        }
+    },
+    Comment: {
+        author(parent, args, ctx, info) {
+            return users.find((user) => {
+                return user.id === parent.author
             })
         }
     }
