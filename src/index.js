@@ -40,11 +40,27 @@ const posts = [{
     author: 2
 }]
 
+// Demo comments data
+const comments = [{
+    id: 4,
+    text: 'The text for the first comment'
+},{
+    id: 5,
+    text: 'Second comment'
+},{
+    id: 6,
+    text: 'Third comment'
+},{
+    id: 7,
+    text: 'Fourth comment and we are done!'
+}]
+
 // Type definitions (schema)
 const typeDefs = `
     type Query {
         users(query: String): [User!]!
         posts(query: String): [Post!]!
+        comments: [Comment!]!
         me: User!
         post: Post!
     }
@@ -63,6 +79,11 @@ const typeDefs = `
         body: String!
         isPublished: Boolean!
         author: User!
+    }
+
+    type Comment {
+        id: ID!
+        text: String!
     }
 `
 
@@ -89,6 +110,11 @@ const resolvers = {
                 const isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase())
                 return isTitleMatch || isBodyMatch
             })
+        },
+        comments(parent, args, ctx, info) {
+            if(!args.query) {
+                return comments
+            }
         },
         me() {
             return {
