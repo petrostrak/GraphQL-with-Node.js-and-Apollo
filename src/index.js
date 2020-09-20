@@ -24,17 +24,20 @@ const posts = [{
     id: 1,
     title: 'Post#1',
     body: 'Body of first post',
-    isPublished: true
+    isPublished: true,
+    author: 1
 },{
     id: 2,
     title: 'Post#2',
     body: 'Body of second post',
-    isPublished: false
+    isPublished: false,
+    author: 1
 },{
     id: 3,
     title: 'Post#3',
     body: 'Body of third post',
-    isPublished: false
+    isPublished: false,
+    author: 2
 }]
 
 // Type definitions (schema)
@@ -58,6 +61,7 @@ const typeDefs = `
         title: String!
         body: String!
         isPublished: Boolean!
+        author: User!
     }
 `
 
@@ -100,6 +104,14 @@ const resolvers = {
                 body: 'This is a body of a post',
                 isPublished: true
             }
+        }
+    },
+    Post: {
+        // parent parameter corresponds to Post type
+        author(parent, args, ctx, info) {
+            return users.find((user) => {
+                return user.id === parent.author
+            })
         }
     }
 }
