@@ -11,6 +11,7 @@ type Query {
         deleteUser(id: ID!): User!
         updateUser(id: ID!, data: UpdateUserInput!): User!
         createPost(data: CreatePostInput!): Post!
+        updatePost(id: ID!, data: UpdatePostInput!): Post!
         deletePost(id: ID!): User!
         createComment(data: CreateCommentInput!): Comment!
         deleteComment(id: ID!): Comment!
@@ -33,6 +34,12 @@ type Query {
         body: String!
         published: Boolean!
         author: ID!
+    }
+
+    input UpdatePostInput {
+        title: String
+        body: String
+        published: Boolean
     }
 
     input CreateCommentInput {
