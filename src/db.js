@@ -1,7 +1,7 @@
 const users = [{
     id: '1',
-    name: 'Petros',
-    email: 'petros@example.com',
+    name: 'Andrew',
+    email: 'andrew@example.com',
     age: 27
 }, {
     id: '2',
@@ -52,7 +52,7 @@ const comments = [{
     id: '105',
     text: 'Nevermind. I got it to work.',
     author: '1',
-    post: '11'
+    post: '12'
 }]
 
 const db = {

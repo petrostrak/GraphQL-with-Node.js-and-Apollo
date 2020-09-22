@@ -2,12 +2,12 @@ import { GraphQLServer, PubSub } from 'graphql-yoga'
 import db from './db'
 import Query from './resolvers/Query'
 import Mutation from './resolvers/Mutation'
-import User from './resolvers/User'
-import Comment from './resolvers/Comment'
-import Post from './resolvers/Post'
 import Subscription from './resolvers/Subscription'
+import User from './resolvers/User'
+import Post from './resolvers/Post'
+import Comment from './resolvers/Comment'
 
-const pubSub = new PubSub()
+const pubsub = new PubSub()
 
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
@@ -21,11 +21,10 @@ const server = new GraphQLServer({
     },
     context: {
         db,
-        pubSub
+        pubsub
     }
 })
 
-// visit localhost:4000 to do the queries
 server.start(() => {
     console.log('The server is up!')
 })
