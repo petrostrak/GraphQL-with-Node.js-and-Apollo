@@ -9,33 +9,33 @@ const prisma = new Prisma({
 // These methods take two arguments. The 1st is the operation arguments
 // and the 2nd is the selection set
 
-const createPostForUser = async (authorId, data) => {
-    const userExists = await prisma.exists.User({ id: authorId })
+// const createPostForUser = async (authorId, data) => {
+//     const userExists = await prisma.exists.User({ id: authorId })
 
-    if(!userExists) {
-        throw new Error('User not found')
-    }
+//     if(!userExists) {
+//         throw new Error('User not found')
+//     }
 
-    const post = await prisma.mutation.createPost({
-        data: {
-            ...data,
-            author: {
-                connect: {
-                    id: authorId
-                }
-            }
-        }
-    }, '{ author {id name email posts { id title published }} }')
+//     const post = await prisma.mutation.createPost({
+//         data: {
+//             ...data,
+//             author: {
+//                 connect: {
+//                     id: authorId
+//                 }
+//             }
+//         }
+//     }, '{ author {id name email posts { id title published }} }')
 
-    return post.author
-}
+//     return post.author
+// }
 
-createPostForUser('ckfh0zvn700uj07087vijilrt', {
-    title: 'Great books to read',
-    body: 'The art of war',
-    published: true
-}).then((user) => console.log(JSON.stringify(user, undefined, 2)))
-  .catch((err) => console.log(err))
+// createPostForUser('ckfh0zvn700uj07087vijilrt', {
+//     title: 'Great books to read',
+//     body: 'The art of war',
+//     published: true
+// }).then((user) => console.log(JSON.stringify(user, undefined, 2)))
+//   .catch((err) => console.log(err))
 
 const updatePostForUser = async (postId, data) => {
     const postExists = prisma.exists.Post({ id: postId })
@@ -54,6 +54,6 @@ const updatePostForUser = async (postId, data) => {
     return post.author
 }
 
-updatePostForUser("ckfh7p5v103410708noy48h12", { published: true })
-    .then((user) => console.log(JSON.stringify(user, undefined, 2))) // 3 arguments = 1st. data to log, 2nd replacers to manipulate the object, 3rd spacing
-    .catch((err) => console.log(err))
+// updatePostForUser("ckfh7p5v103410708noy48h12", { published: true })
+//     .then((user) => console.log(JSON.stringify(user, undefined, 2))) // 3 arguments = 1st. data to log, 2nd replacers to manipulate the object, 3rd spacing
+//     .catch((err) => console.log(err))
