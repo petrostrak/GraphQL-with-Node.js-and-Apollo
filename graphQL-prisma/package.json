@@ -22,11 +22,11 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "bcrypt": "^5.0.0",
     "get-graphql-schema": "^2.1.2",
     "graphql-cli": "2.16.4",
     "graphql-yoga": "^1.18.3",
-    "prisma-binding": "2.1.1",
-    "uuid": "^8.3.0"
+    "prisma-binding": "2.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
